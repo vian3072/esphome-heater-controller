@@ -1,0 +1,45 @@
+esphome:
+  includes:
+    - heaterswitch.h
+  name: heaterservo
+  friendly_name: HeaterServo
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "" #Fill in encryption key
+
+ota:
+  password: "" #fill in ota password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Heaterservo Fallback Hotspot"
+    password: "fallback123123"
+
+captive_portal:
+
+switch:
+- platform: custom
+  lambda: |-
+    auto my_custom_switch = new MyCustomSwitch();
+    App.register_component(my_custom_switch);
+    return {my_custom_switch};
+
+  switches:
+    name: "heaterservo"
+    id: my_custom_switch
+
+
